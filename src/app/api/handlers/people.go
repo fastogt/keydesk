@@ -1,21 +1,20 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 
 	"keydesk/app/database"
-	"keydesk/app/vault"
 )
 
 type PeopleHandler struct {
-	db    *database.Database
-	vault *vault.Vault
+	db *database.Database
 }
 
-func NewPeopleHandler(db *database.Database, v *vault.Vault) *PeopleHandler {
-	return &PeopleHandler{db: db, vault: v}
+func NewPeopleHandler(db *database.Database) *PeopleHandler {
+	return &PeopleHandler{db: db}
 }
 
 func (h *PeopleHandler) HandleList(w http.ResponseWriter, r *http.Request) {
@@ -144,33 +143,14 @@ func (h *PeopleHandler) HandleOffboard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req struct {
-		RotatePasswords   bool              `json:"rotate_passwords"`
-		ServiceOwners     map[string]string `json:"service_owners"`
-		RotateCredentials bool              `json:"rotate_credentials"`
+		ServiceOwners map[string]string `json:"service_owners"`
 	}
-	if err := decodeJSON(r, &req); err != nil {
-		respondError(w, http.StatusBadRequest, "Invalid request")
-		return
-	}
+	decodeJSON(r, &req)
 
 	revokedAccountIDs, err := h.db.RevokeAllAssignmentsForPerson(id, "offboarded")
 	if err != nil {
 		respondError(w, http.StatusInternalServerError, "Failed to revoke assignments")
 		return
-	}
-
-	newPasswords := map[string]string{}
-	if req.RotatePasswords {
-		for _, accountID := range revokedAccountIDs {
-			newPass := generatePassword(20)
-			encrypted, err := h.vault.Encrypt(newPass)
-			if err != nil {
-				continue
-			}
-			h.db.UpdateAccountPassword(accountID, encrypted)
-			newPasswords[accountID] = newPass
-			h.db.LogAudit("rotated", "account", accountID, id, adminID, "Password rotated during offboarding of "+person.Name)
-		}
 	}
 
 	for serviceID, newOwnerID := range req.ServiceOwners {
@@ -179,21 +159,10 @@ func (h *PeopleHandler) HandleOffboard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.db.OffboardPerson(id)
-	h.db.LogAudit("offboarded", "person", id, id, adminID, "Offboarded person: "+person.Name+". Revoked "+string(rune(len(revokedAccountIDs)+'0'))+" accounts.")
+	h.db.LogAudit("offboarded", "person", id, id, adminID, fmt.Sprintf("Offboarded %s. Revoked %d accounts.", person.Name, len(revokedAccountIDs)))
 
 	respondJSON(w, http.StatusOK, map[string]any{
 		"message":       "offboarded",
 		"revoked_count": len(revokedAccountIDs),
-		"new_passwords": newPasswords,
 	})
-}
-
-func generatePassword(length int) string {
-	const charset = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*"
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[i%len(charset)]
-	}
-	// use crypto/rand for real randomness
-	return string(b)
 }

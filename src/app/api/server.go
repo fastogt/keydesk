@@ -44,7 +44,7 @@ func NewServer(cfg ServerConfig) *Server {
 	log.Info("[Server] Initializing...")
 
 	s.auth = handlers.NewAuthHandler(cfg.Database, cfg.JWTSecret)
-	s.people = handlers.NewPeopleHandler(cfg.Database, cfg.Vault)
+	s.people = handlers.NewPeopleHandler(cfg.Database)
 	s.accounts = handlers.NewAccountsHandler(cfg.Database, cfg.Vault)
 	s.services = handlers.NewServicesHandler(cfg.Database)
 	s.credentials = handlers.NewCredentialsHandler(cfg.Database, cfg.Vault)

@@ -142,12 +142,10 @@ function renderDetail(data: any) {
   });
 
   document.getElementById('offboardBtn')?.addEventListener('click', async () => {
-    if (!confirm(`Offboard ${p.name}? This will revoke all account access and rotate passwords.`)) return;
+    if (!confirm(`Offboard ${p.name}? This will revoke all account access.`)) return;
     try {
       await apiPost('/api/people/' + p.id + '/offboard', {
-        rotate_passwords: true,
-        service_owners: {},
-        rotate_credentials: true
+        service_owners: {}
       });
       toast('Person offboarded');
       goBack();
