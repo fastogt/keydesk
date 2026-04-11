@@ -88,7 +88,37 @@ package-rpm-amd64: build-linux-amd64
 		mv "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE).x86_64.rpm" "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE)-x86_64.rpm"; \
 	fi
 
-package-all: package-deb-amd64 package-rpm-amd64
+package-deb: build-all
+	@echo "Creating DEB packages for all architectures..."
+	@for arch in amd64; do \
+		if [ -f "$(BIN_DIR)/$(BINARY)-linux-$$arch" ]; then \
+			echo "Creating DEB package for $$arch..."; \
+			cp "$(BIN_DIR)/$(BINARY)-linux-$$arch" "$(BIN_DIR)/$(BINARY)"; \
+			VERSION=$(VERSION) RELEASE=$(RELEASE) ARCH=$$arch PATH=$$PATH:$(shell go env GOPATH)/bin nfpm pkg --config nfpm.yaml --packager deb --target $(BUILD_DIR)/; \
+			rm "$(BIN_DIR)/$(BINARY)"; \
+		fi; \
+	done
+	@if [ -f "$(BUILD_DIR)/$(BINARY)_$(VERSION)-$(RELEASE)_amd64.deb" ]; then \
+		mv "$(BUILD_DIR)/$(BINARY)_$(VERSION)-$(RELEASE)_amd64.deb" "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE)-amd64.deb"; \
+	fi
+
+package-rpm: build-all
+	@echo "Creating RPM packages for all architectures..."
+	@for arch in amd64; do \
+		if [ -f "$(BIN_DIR)/$(BINARY)-linux-$$arch" ]; then \
+			echo "Creating RPM package for $$arch..."; \
+			rpm_arch=$$arch; \
+			if [ "$$arch" = "amd64" ]; then rpm_arch="x86_64"; fi; \
+			cp "$(BIN_DIR)/$(BINARY)-linux-$$arch" "$(BIN_DIR)/$(BINARY)"; \
+			VERSION=$(VERSION) RELEASE=$(RELEASE) ARCH=$$rpm_arch PATH=$$PATH:$(shell go env GOPATH)/bin nfpm pkg --config nfpm.yaml --packager rpm --target $(BUILD_DIR)/; \
+			rm "$(BIN_DIR)/$(BINARY)"; \
+		fi; \
+	done
+	@if [ -f "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE).x86_64.rpm" ]; then \
+		mv "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE).x86_64.rpm" "$(BUILD_DIR)/$(BINARY)-$(VERSION)-$(RELEASE)-x86_64.rpm"; \
+	fi
+
+package-all: package-deb package-rpm
 
 install-local: build
 	@echo "Installing locally..."
