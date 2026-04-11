@@ -1,0 +1,50 @@
+# Binaries
+bin/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test
+*.test
+*.out
+coverage/
+coverage.out
+coverage.html
+
+# IDE
+.claude/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+.env.local
+
+# Build
+tmp/
+
+# Downloads folder - track folder but not packages
+downloads/*.deb
+downloads/*.rpm
+
+# Frontend dependencies
+src/frontend/node_modules/
+
+# Frontend build output
+src/install/public/js/*.js
+src/install/public/js/*.js.map
+
+src/go.sum
+src/keydesk

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KeyDesk - Login</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+    }
+    .login-card h1 { font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+    .login-card p { color: #64748b; margin-bottom: 32px; font-size: 15px; }
+    .field { margin-bottom: 16px; text-align: left; }
+    .field label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 4px; }
+    .field input {
+      width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px;
+      font-size: 15px; font-family: inherit;
+    }
+    .field input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
+    .login-btn {
+      width: 100%; padding: 12px; background: #4f46e5; color: white;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .login-btn:hover { background: #4338ca; }
+    .error-msg {
+      display: none; margin-top: 16px; padding: 12px;
+      background: #fef2f2; color: #dc2626; border-radius: 8px; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h1>KeyDesk</h1>
+    <p>Corporate credential manager</p>
+    <form id="login-form">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="admin@company.com">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Password">
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+    <div id="login-error" class="error-msg"></div>
+  </div>
+  <script type="module" src="/js/setup.js"></script>
+</body>
+</html>

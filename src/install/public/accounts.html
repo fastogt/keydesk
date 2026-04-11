@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>KeyDesk - Accounts</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebarToggle">&#9776;</button>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="page-content">
+    <div id="listView">
+      <div class="page-header">
+        <h1>Accounts</h1>
+        <div class="flex-center">
+          <input type="text" class="search" id="searchInput" placeholder="Search...">
+          <select class="search" id="typeFilter">
+            <option value="">All types</option>
+            <option value="email">Email</option>
+            <option value="social">Social</option>
+            <option value="cloud">Cloud</option>
+            <option value="payment">Payment</option>
+            <option value="platform">Platform</option>
+            <option value="dns">DNS</option>
+            <option value="analytics">Analytics</option>
+            <option value="ads">Ads</option>
+            <option value="other">Other</option>
+          </select>
+          <button class="btn btn-primary" id="addBtn">+ Add</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <table class="data-table">
+          <thead>
+            <tr><th>Name</th><th>Type</th><th>People</th><th>Login</th></tr>
+          </thead>
+          <tbody id="accountsBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="detailView" style="display:none">
+      <div class="page-header">
+        <button class="btn" id="backBtn">&larr; Back</button>
+      </div>
+      <div class="page-body" id="detailContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Add Account</h3><button class="modal-close" id="addModalClose">&times;</button></div>
+      <form id="addForm">
+        <div class="modal-body">
+          <div class="field"><label>Name</label><input id="addName" required placeholder="Company LinkedIn"></div>
+          <div class="row">
+            <div class="field"><label>Type</label>
+              <select id="addType">
+                <option value="social">Social</option>
+                <option value="email">Email</option>
+                <option value="cloud">Cloud</option>
+                <option value="payment">Payment</option>
+                <option value="platform">Platform</option>
+                <option value="dns">DNS</option>
+                <option value="analytics">Analytics</option>
+                <option value="ads">Ads</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="field"><label>URL</label><input id="addURL" placeholder="linkedin.com"></div>
+          </div>
+          <div class="field"><label>Login Email</label><input id="addEmail" placeholder="marketing@company.com"></div>
+          <div class="field"><label>Password</label><input id="addPassword" type="password"></div>
+          <div class="field"><label>TOTP Secret (optional)</label><input id="addTOTP" placeholder="Base32 2FA seed"></div>
+          <div class="field"><label>Notes</label><textarea id="addNotes"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="assignModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Give Account To</h3><button class="modal-close" id="assignModalClose">&times;</button></div>
+      <form id="assignForm">
+        <div class="modal-body">
+          <div class="field"><label>Person</label><select id="assignPerson"></select></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Give Access</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="/js/accounts.js"></script>
+</body>
+</html>

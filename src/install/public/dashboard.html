@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>KeyDesk - Dashboard</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebarToggle">&#9776;</button>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="page-content">
+    <div class="page-header">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="page-body">
+      <div id="statsGrid" class="db-stats"></div>
+      <div id="warnings"></div>
+      <div id="activity" style="margin-top:24px"></div>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>

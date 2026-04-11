@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>KeyDesk - People</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebarToggle">&#9776;</button>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="page-content">
+    <div id="listView">
+      <div class="page-header">
+        <h1>People</h1>
+        <div class="flex-center">
+          <input type="text" class="search" id="searchInput" placeholder="Search...">
+          <select class="search" id="statusFilter">
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="offboarded">Offboarded</option>
+          </select>
+          <button class="btn btn-primary" id="addBtn">+ Add</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <table class="data-table">
+          <thead>
+            <tr><th>Name</th><th>Department</th><th>Accounts</th><th>Services</th><th>Status</th></tr>
+          </thead>
+          <tbody id="peopleBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="detailView" style="display:none">
+      <div class="page-header">
+        <button class="btn" id="backBtn">&larr; Back</button>
+      </div>
+      <div class="page-body" id="detailContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Add Person</h3><button class="modal-close" id="addModalClose">&times;</button></div>
+      <form id="addForm">
+        <div class="modal-body">
+          <div class="field"><label>Name</label><input id="addName" required></div>
+          <div class="field"><label>Email</label><input id="addEmail" type="email"></div>
+          <div class="field"><label>Department</label><input id="addDept"></div>
+          <div class="field"><label>Notes</label><textarea id="addNotes"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="/js/people.js"></script>
+</body>
+</html>

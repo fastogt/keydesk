@@ -1,0 +1,21 @@
+[Unit]
+Description=KeyDesk - Corporate Credential Manager
+After=network.target network-online.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+PIDFile=/var/run/keydesk/keydesk.pid
+ExecStartPre=-/bin/mkdir /var/run/keydesk
+ExecStartPre=-/bin/chown -R fastocloud:fastocloud /var/run/keydesk
+ExecStartPre=-/bin/mkdir -p /var/lib/keydesk
+ExecStartPre=-/bin/chown -R fastocloud:fastocloud /var/lib/keydesk
+ExecStart=/usr/bin/keydesk --daemon
+ExecStop=/usr/bin/keydesk --stop
+ExecStopPost=-/bin/rm -f /var/run/keydesk/keydesk.pid
+User=fastocloud
+Group=fastocloud
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

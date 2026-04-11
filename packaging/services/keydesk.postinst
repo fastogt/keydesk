@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+CONFIG_FILE="/etc/keydesk.conf"
+NEW_CONFIG_FILE="/usr/share/keydesk/keydesk.conf"
+
+if [ -f "$CONFIG_FILE" ]; then
+    echo "Preserving existing configuration file: $CONFIG_FILE"
+else
+    if [ -f "$NEW_CONFIG_FILE" ]; then
+        cp "$NEW_CONFIG_FILE" "$CONFIG_FILE"
+        echo "Installed new configuration file: $CONFIG_FILE"
+    else
+        echo "Warning: Default configuration file not found at $NEW_CONFIG_FILE"
+    fi
+fi
+
+chmod +x /usr/bin/keydesk
+
+useradd -m -U -d /home/fastocloud fastocloud -s /bin/bash || true
+if [ -f "$CONFIG_FILE" ]; then
+    chown fastocloud:fastocloud "$CONFIG_FILE"
+fi

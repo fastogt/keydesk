@@ -1,0 +1,47 @@
+name: "keydesk"
+version: "${VERSION}"
+release: "${RELEASE}"
+arch: "${ARCH}"
+section: "web"
+priority: "optional"
+maintainer: "Alexandr Topilski <atopilski@fastocloud.com>"
+description: "KeyDesk - Self-hosted corporate credential manager"
+vendor: "FastoCloud"
+license: "Apache-2.0"
+
+contents:
+  - src: "./build/bin/keydesk"
+    dst: "/usr/bin/keydesk"
+    file_info:
+      mode: 0755
+
+  - src: "./config/keydesk.conf"
+    dst: "/usr/share/keydesk/keydesk.conf"
+    file_info:
+      mode: 0644
+
+  - src: "./src/install/"
+    dst: "/usr/share/keydesk/install/"
+    type: "tree"
+
+  - src: "./packaging/services/keydesk.service"
+    dst: "/etc/systemd/system/keydesk.service"
+    file_info:
+      mode: 0644
+
+  - src: "./LICENSE"
+    dst: "/usr/share/doc/keydesk/LICENSE"
+    file_info:
+      mode: 0644
+
+scripts:
+  postinstall: "./packaging/services/keydesk.postinst"
+
+overrides:
+  deb:
+    recommends:
+      - curl
+
+  rpm:
+    recommends:
+      - curl

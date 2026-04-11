@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>KeyDesk - Services</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebarToggle">&#9776;</button>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="page-content">
+    <div id="listView">
+      <div class="page-header">
+        <h1>Services</h1>
+        <div class="flex-center">
+          <input type="text" class="search" id="searchInput" placeholder="Search...">
+          <button class="btn btn-primary" id="addBtn">+ Add</button>
+        </div>
+      </div>
+      <div class="page-body">
+        <table class="data-table">
+          <thead>
+            <tr><th>Name</th><th>Owner</th><th>Credentials</th><th>Env</th><th>Status</th></tr>
+          </thead>
+          <tbody id="servicesBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="detailView" style="display:none">
+      <div class="page-header">
+        <button class="btn" id="backBtn">&larr; Back</button>
+      </div>
+      <div class="page-body" id="detailContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Add Service</h3><button class="modal-close" id="addModalClose">&times;</button></div>
+      <form id="addForm">
+        <div class="modal-body">
+          <div class="field"><label>Name</label><input id="addName" required placeholder="payment-service"></div>
+          <div class="field"><label>Description</label><textarea id="addDesc"></textarea></div>
+          <div class="row">
+            <div class="field"><label>Environment</label>
+              <select id="addEnv">
+                <option value="production">Production</option>
+                <option value="staging">Staging</option>
+                <option value="dev">Dev</option>
+              </select>
+            </div>
+            <div class="field"><label>Owner</label><select id="addOwner"><option value="">No owner</option></select></div>
+          </div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="credModal">
+    <div class="modal">
+      <div class="modal-header"><h3>Add Credential</h3><button class="modal-close" id="credModalClose">&times;</button></div>
+      <form id="credForm">
+        <div class="modal-body">
+          <input type="hidden" id="credServiceId">
+          <div class="field"><label>Name</label><input id="credName" required placeholder="Stripe API key"></div>
+          <div class="row">
+            <div class="field"><label>Type</label>
+              <select id="credType">
+                <option value="api_key">API Key</option>
+                <option value="password">Password</option>
+                <option value="oauth_client">OAuth Client</option>
+                <option value="oauth_token">OAuth Token</option>
+                <option value="ssh_key">SSH Key</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="field"><label>Provider</label><input id="credProvider" placeholder="stripe"></div>
+          </div>
+          <div class="field"><label>Key / Value</label><input id="credKey" placeholder="sk_live_..."></div>
+          <div class="field"><label>Secret (optional)</label><input id="credSecret" type="password"></div>
+          <div class="row">
+            <div class="field"><label>Expires</label><input id="credExpires" type="date"></div>
+            <div class="field"><label>Where used</label><input id="credWhere" placeholder="env STRIPE_KEY on prod-1"></div>
+          </div>
+          <div class="field"><label>Notes</label><textarea id="credNotes"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="/js/services.js"></script>
+</body>
+</html>

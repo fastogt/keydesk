@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      width: 320px;
+      background: #f8fafc;
+    }
+    .header {
+      background: #1e1b4b;
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header h1 { font-size: 16px; font-weight: 600; }
+    .header .user { font-size: 12px; opacity: 0.7; }
+
+    .content { padding: 12px; }
+
+    .account-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .account-item:hover { border-color: #4f46e5; background: #f5f3ff; }
+    .account-name { font-size: 14px; font-weight: 500; color: #111827; }
+    .account-type { font-size: 11px; color: #6b7280; margin-top: 2px; }
+    .open-btn {
+      background: #4f46e5; color: white; border: none;
+      padding: 6px 14px; border-radius: 6px; font-size: 12px;
+      font-weight: 500; cursor: pointer;
+    }
+    .open-btn:hover { background: #4338ca; }
+
+    .empty { text-align: center; padding: 24px; color: #6b7280; font-size: 13px; }
+
+    .login-form { padding: 16px; }
+    .login-form h2 { font-size: 16px; margin-bottom: 12px; color: #111827; }
+    .field { margin-bottom: 10px; }
+    .field label { display: block; font-size: 12px; font-weight: 500; color: #374151; margin-bottom: 3px; }
+    .field input {
+      width: 100%; padding: 8px 10px; border: 1px solid #d1d5db;
+      border-radius: 6px; font-size: 13px;
+    }
+    .field input:focus { outline: none; border-color: #4f46e5; }
+    .login-btn {
+      width: 100%; padding: 10px; background: #4f46e5; color: white;
+      border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
+      cursor: pointer;
+    }
+    .login-btn:hover { background: #4338ca; }
+    .error { color: #dc2626; font-size: 12px; margin-top: 8px; display: none; }
+
+    .footer {
+      padding: 8px 16px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer a {
+      font-size: 11px; color: #6b7280; text-decoration: none;
+    }
+    .footer a:hover { color: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>KeyDesk</h1>
+      <div class="user" id="userName"></div>
+    </div>
+  </div>
+
+  <div id="loginView" style="display:none">
+    <div class="login-form">
+      <h2>Connect to KeyDesk</h2>
+      <form id="loginForm">
+        <div class="field">
+          <label>Server URL</label>
+          <input id="serverUrl" type="url" required placeholder="https://access.company.com">
+        </div>
+        <div class="field">
+          <label>Your Person ID</label>
+          <input id="personId" required placeholder="Ask your admin">
+        </div>
+        <div class="field">
+          <label>PIN</label>
+          <input id="pin" type="password" placeholder="Optional">
+        </div>
+        <button type="submit" class="login-btn">Connect</button>
+        <div class="error" id="loginError"></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="accountsView" style="display:none">
+    <div class="content">
+      <div id="accountsList"></div>
+    </div>
+    <div class="footer">
+      <a href="#" id="logoutBtn">Disconnect</a>
+      <a href="#" id="openDashboard">Open Dashboard</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
