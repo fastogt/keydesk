@@ -1,4 +1,4 @@
-.PHONY: build build-linux-amd64 package-deb package-rpm install-local clean test lint fmt vet mod-tidy help
+.PHONY: build build-linux-amd64 package-deb package-rpm install-local clean test test-frontend lint fmt vet mod-tidy help
 
 VERSION ?= 1.0.0.1
 RELEASE ?= $(shell git rev-parse --short=8 HEAD)
@@ -132,6 +132,10 @@ install-local: build
 
 test:
 	cd src && $(GOTEST) -v ./...
+
+test-frontend:
+	@command -v npm >/dev/null 2>&1 || { echo "ERROR: npm is required"; exit 1; }
+	cd src/frontend && npm install --silent && npm test
 
 lint:
 	@command -v golangci-lint >/dev/null 2>&1 || { echo "golangci-lint not installed"; exit 1; }

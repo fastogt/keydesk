@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
@@ -29,6 +29,10 @@ jobs:
       - name: Type-check frontend
         working-directory: src/frontend
         run: npm run check
+
+      - name: Test frontend + extension
+        working-directory: src/frontend
+        run: npm test
 
       - name: Build frontend
         working-directory: src/frontend
@@ -60,4 +64,10 @@ jobs:
 
       - name: Go test
         working-directory: src
-        run: go test ./...
+        run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: src/coverage.out

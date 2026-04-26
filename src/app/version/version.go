@@ -1,7 +1,7 @@
 package version
 
 const ProjectName = "keydesk"
-const VersionApp = "1.0.0.1 Revision: dev"
+const VersionApp = "1.0.0.1 Revision: 8de101fd"
 const VersionAppShort = "1.0.0"
 const VersionAppNumber = 1001
 
